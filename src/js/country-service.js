@@ -6,9 +6,17 @@ export default class CountryService{
 
     fetchCountry() {
         return fetch(`${BASE_URL}${this.searchQuery}`)
-        .then(responce =>{ return responce.json()})
+        .then(responce =>{
+            return responce.json()
+        })
+        .then(data=>{
+            return data
+        })
     }
     get query () {
         return this.searchQuery;
+    }
+    set query (newQuery) {
+        this.searchQuery = newQuery;
     }
 }
