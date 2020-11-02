@@ -3,6 +3,10 @@ const debounce = require('lodash.debounce');
 import countryListTemplate from './handlebars/country-list.hbs';
 import error from './js/pnotyfy/pnotyfy.js'
 import personalCountryTemplate from './handlebars/personal-country-marckup.hbs'
+import CountryService from './js/country-service'
+
+const countryApiServices = new CountryService;
+
 
 const refs = {
     searchForm: document.querySelector('.js-searh-form'),
@@ -44,9 +48,8 @@ function countryEmptyListMarckup () {
     refs.counrtySection.innerHTML = '';
 }
 
-function getCountryByName (url) {
-   return fetch(`https://restcountries.eu/rest/v2/name/${url}`)
-    .then(responce =>{ return responce.json()})
+function getCountryByName () {
+    countryApiServices.fetchCountry()
 }
 
 function personalCountry(country) {
