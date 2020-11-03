@@ -31,17 +31,14 @@ function onSearch(e) {
         } else if (country.length > 1 && country.length<=10 ) {
             renderMarkupCountryList(country);
         } else if (country.length > 10) {
-            renderMarkupEmptyList()
             errorQuantytyErrorHandler() ;
         }
     })
-    .catch(err=>{
-        renderMarkupEmptyList();
-        errorInputHandler(err)}
-        )
+    .catch(errorInputHandler)
 };
 
 function errorInputHandler() {
+    renderMarkupEmptyList();
     const abc =  error({
         text: "Incorrect request please send the request with correct format",
         sticker: false,
