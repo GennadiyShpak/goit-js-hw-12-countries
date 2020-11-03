@@ -19,4 +19,7 @@ export default class CountryService{
     set query (newQuery) {
         this.searchQuery = newQuery;
     }
+    resetQuery(){
+        this.searchQuery = ''
+    }
 }

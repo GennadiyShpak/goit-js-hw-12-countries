@@ -14,7 +14,8 @@ const refs = {
 };
 
 refs.searchForm.addEventListener('input',debounce(onSearch,1000));
-    
+
+
 
 function onSearch(e) {
     e.preventDefault();
@@ -26,14 +27,16 @@ function onSearch(e) {
     countryApiServices.fetchCountry()
     .then(country=>{
          if (country.length === 1) {
-            personalCountry(country)
+            personalCountry(country);
         } else if (country.length > 1 && country.length<=10 ) {
-            countryListMarckup(country)
-        } else {a}
+            countryListMarckup(country);
+        } else if (country.length > 10) {
+            countryEmptyListMarckup()
+            errorQuantytyErrorHandler() ;
+        }
     })
-    
-    // .catch(errors=>console.log(error))
-    };
+    .catch(errorInputHandler())
+};
 
 function countryListMarckup(country) {
     const marckup = countryListTemplate(country);
@@ -47,4 +50,20 @@ function countryEmptyListMarckup () {
 function personalCountry(country) {
     const marckup = personalCountryTemplate({ country });
     refs.counrtySection.innerHTML = marckup;
+}
+
+function errorInputHandler() {
+    return  error({
+        text: "Incorrect request please send the request with correct format",
+        sticker: false,
+        delay: 2000,
+      });
+}
+
+function errorQuantytyErrorHandler () {
+    return error({
+        text: "To many mathes found. Please enter a more specific query!",
+        sticker: false,
+        delay: 2000,
+      });
 }

@@ -18,3 +18,29 @@ body {
    */
   background-image: url('./images/bg-pattern.png');
 }
+
+.coountry_wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.main__title {
+  text-align: center;
+  font-size: 70px;
+  padding-bottom: 50px;
+}
+.description__item {
+  font-weight: 700;
+  font-size: 30px;
+}
+.content {
+  font-size: 30px;
+}
+.country__input {
+  width: 500px;
+  height: 50px;
+  font-size: 30px;
+}
+.country-search__form {
+  text-align: center;
+}
