@@ -5,7 +5,7 @@ import error from './js/pnotyfy/pnotyfy.js'
 import personalCountryTemplate from './handlebars/personal-country-marckup.hbs'
 import CountryService from './js/country-service'
 
-const countryApiServices = new CountryService;
+const countryApiServices = new CountryService();
 
 const refs = {
     searchForm: document.querySelector('.js-searh-form'),
@@ -21,44 +21,51 @@ function onSearch(e) {
     e.preventDefault();
     countryApiServices.searchQuery = e.target.value;
     if (countryApiServices.searchQuery==='') {
-      countryEmptyListMarckup()
+        renderMarkupEmptyList()
         return
     }
     countryApiServices.fetchCountry()
     .then(country=>{
          if (country.length === 1) {
-            personalCountry(country);
+            renderMarkupCountryItem(country);
         } else if (country.length > 1 && country.length<=10 ) {
-            countryListMarckup(country);
+            renderMarkupCountryList(country);
         } else if (country.length > 10) {
-            countryEmptyListMarckup()
+            renderMarkupEmptyList()
             errorQuantytyErrorHandler() ;
         }
     })
-    .catch(errorInputHandler())
+    .catch(err=>{
+        renderMarkupEmptyList();
+        errorInputHandler(err)}
+        )
 };
 
-function countryListMarckup(country) {
+function errorInputHandler() {
+    const abc =  error({
+        text: "Incorrect request please send the request with correct format",
+        sticker: false,
+        delay: 2000,
+      })
+      return abc
+}
+
+
+function renderMarkupCountryList (country) {
     const marckup = countryListTemplate(country);
     refs.counrtySection.innerHTML = marckup;
 }  
 
-function countryEmptyListMarckup () {
+function renderMarkupEmptyList () {
     refs.counrtySection.innerHTML = '';
 }
 
-function personalCountry(country) {
+function renderMarkupCountryItem(country) {
     const marckup = personalCountryTemplate({ country });
     refs.counrtySection.innerHTML = marckup;
 }
 
-function errorInputHandler() {
-    return  error({
-        text: "Incorrect request please send the request with correct format",
-        sticker: false,
-        delay: 2000,
-      });
-}
+
 
 function errorQuantytyErrorHandler () {
     return error({
