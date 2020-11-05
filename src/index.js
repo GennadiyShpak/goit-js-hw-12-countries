@@ -17,34 +17,34 @@ refs.searchForm.addEventListener('input',debounce(onSearch,1000));
 
 
 
-function onSearch(e) {
+async function onSearch(e) {
     e.preventDefault();
     countryApiServices.searchQuery = e.target.value;
     if (countryApiServices.searchQuery==='') {
         renderMarkupEmptyList()
         return
     }
-    countryApiServices.fetchCountry()
-    .then(country=>{
-         if (country.length === 1) {
-            renderMarkupCountryItem(country);
-        } else if (country.length > 1 && country.length<=10 ) {
-            renderMarkupCountryList(country);
-        } else if (country.length > 10) {
-            errorQuantytyErrorHandler() ;
-        }
-    })
-    .catch(errorInputHandler)
+
+    try {
+        const country =await countryApiServices.fetchCountry()
+    
+        if (country.length === 1) {
+           renderMarkupCountryItem(country);
+       } else if (country.length > 1 && country.length<=10 ) {
+           renderMarkupCountryList(country);
+       } else if (country.length > 10) {
+           errorQuantytyErrorHandler() ;
+       }} catch {errorInputHandler()}
 };
 
 function errorInputHandler() {
     renderMarkupEmptyList();
-    const abc =  error({
+    const incorrectError =  error({
         text: "Incorrect request please send the request with correct format",
         sticker: false,
         delay: 2000,
       })
-      return abc
+      return incorrectError;
 }
 
 
