@@ -29,12 +29,13 @@ async function onSearch(e) {
         const country =await countryApiServices.fetchCountry()
     
         if (country.length === 1) {
-           renderMarkupCountryItem(country);
+           renderMarkupCountry(country);
        } else if (country.length > 1 && country.length<=10 ) {
            renderMarkupCountryList(country);
        } else if (country.length > 10) {
            errorQuantytyErrorHandler() ;
-       }} catch {errorInputHandler()}
+       }}
+       catch {errorInputHandler()}
 };
 
 function errorInputHandler() {
@@ -57,7 +58,7 @@ function renderMarkupEmptyList () {
     refs.counrtySection.innerHTML = '';
 }
 
-function renderMarkupCountryItem(country) {
+function renderMarkupCountry(country) {
     const marckup = personalCountryTemplate({ country });
     refs.counrtySection.innerHTML = marckup;
 }
